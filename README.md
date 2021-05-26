@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-  <img src="./src/assets/demoDesafio01.gif" height="500">
+  <img src="./src/assets/demoDesafio01.gif">
 </p>
 
 ## Techs
