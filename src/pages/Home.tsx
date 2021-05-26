@@ -1,4 +1,5 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
+import { Alert } from 'react-native';
 
 import { Header } from '../components/Header';
 import { MyTasksList } from '../components/MyTasksList';
@@ -15,36 +16,39 @@ export function Home() {
 
   function handleAddTask(newTaskTitle: string) {
     //TODO - add new task if it's not empty
-    const task = {
-      id: new Date().getTime(),
-      title: newTaskTitle,
-      done: false
+    if (newTaskTitle !== '') {
+      const newTask = {
+        id: new Date().getTime(),
+        title: newTaskTitle,
+        done: false
+      }
+  
+      setTasks([...tasks, newTask])
+    }else{
+      return;
     }
-
-    setTasks(oldState => [...oldState, task]);
   }
 
   function handleMarkTaskAsDone(id: number) {
     //TODO - mark task as done if exists
-    setTasks(oldState => oldState.map( function(item){
+    const mapTasks = tasks.map(item => {
       if(item.id === id){
-        if(item.done=== false){
-          item.done=true
-        }else{
-          item.done=false
-        }
+        item.done = !item.done
       }
       return item
-    }
-    ));
+    })
+
+    setTasks(mapTasks)
+
   }
 
   function handleRemoveTask(id: number) {
     //TODO - remove task from state
-    setTasks(oldState => oldState.filter(
+    const filterTasks = tasks.filter(
       item => item.id !== id
-    ));
-    
+    )
+
+    setTasks(filterTasks)
 
   }
 
@@ -54,10 +58,10 @@ export function Home() {
 
       <TodoInput addTask={handleAddTask} />
 
-      <MyTasksList 
-        tasks={tasks} 
-        onPress={handleMarkTaskAsDone} 
-        onLongPress={handleRemoveTask} 
+      <MyTasksList
+        tasks={tasks}
+        onPress={handleMarkTaskAsDone}
+        onLongPress={handleRemoveTask}
       />
     </>
   )
